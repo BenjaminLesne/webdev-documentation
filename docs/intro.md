@@ -2,6 +2,6 @@
 sidebar_position: 1
 ---
 
-# Documentation Intro
+# Intro
 
 I wanted to put the gems I find somewhere I won't forget, so here we are 🤷‍♂️

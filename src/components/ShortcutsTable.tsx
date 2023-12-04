@@ -9,7 +9,16 @@ import {
 
 import React from "react";
 
-const shortcuts = [
+type Shortcut = {
+  action: string;
+  description: string;
+};
+
+type Props = {
+  shortcuts: Shortcut[];
+};
+
+const vscodeShortcuts = [
   {
     action: "CTRL + K + Z",
     description: "toggle zen mode",
@@ -39,9 +48,17 @@ const shortcuts = [
     action: "CTRL + SHIFT + K",
     description: "delete current line",
   },
+  {
+    action: "CTRL + SHIFT + G",
+    description: "show source control",
+  },
+  {
+    action: "CTRL + SHIFT + E",
+    description: "show explorer",
+  },
 ];
 
-export const ShortcutsTable = () => {
+export const ShortcutsTable = ({ shortcuts = vscodeShortcuts }: Props) => {
   return (
     <Table>
       <TableHeader>

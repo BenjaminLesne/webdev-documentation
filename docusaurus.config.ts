@@ -12,7 +12,7 @@ const config: Config = {
       },
     ],
   ],
-  title: "webdev documentation",
+  title: "WDD",
   tagline: "Dinosaurs are cool",
   favicon: "img/favicon.ico",
 
@@ -69,7 +69,7 @@ const config: Config = {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
-      title: "Webdev documentation",
+      title: "WDD",
       logo: {
         alt: "My Site Logo",
         src: "img/logo.svg",

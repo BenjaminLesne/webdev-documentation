@@ -56,6 +56,22 @@ const vscodeShortcuts = [
     action: "CTRL + SHIFT + E",
     description: "show explorer",
   },
+  {
+    action: "CTRL + SHIFT + L",
+    description: "select all occurences",
+  },
+  {
+    action: "CTRL + SHIFT + ²",
+    description: "open a new terminal",
+  },
+  {
+    action: "CTRL + ²",
+    description: "toggle the terminal window",
+  },
+  {
+    action: "CTRL + ALT + F (I'm not sure, I used this on macos)",
+    description: "follow the other user while live sharing",
+  },
 ];
 
 export const ShortcutsTable = ({ shortcuts = vscodeShortcuts }: Props) => {

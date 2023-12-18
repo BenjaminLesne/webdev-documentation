@@ -72,6 +72,10 @@ const vscodeShortcuts = [
     action: "CTRL + ALT + F (I'm not sure, I used this on macos)",
     description: "follow the other user while live sharing",
   },
+  {
+    action: "CTRL + K + S",
+    description: "save without formatting",
+  },
 ];
 
 export const ShortcutsTable = ({ shortcuts = vscodeShortcuts }: Props) => {

@@ -76,6 +76,10 @@ const vscodeShortcuts = [
     action: "CTRL + K + S",
     description: "save without formatting",
   },
+  {
+    action: "CTRL + pageUp/pageDown",
+    description: "switch to next/previous terminal",
+  },
 ];
 
 export const ShortcutsTable = ({ shortcuts = vscodeShortcuts }: Props) => {

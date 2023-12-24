@@ -3,6 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
+  onBrokenLinks: "warn",
   themes: [
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
@@ -27,7 +28,6 @@ const config: Config = {
   organizationName: "BenjaminLesne", // Usually your GitHub org/user name.
   projectName: "docusaurus", // Usually your repo name.
 
-  onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set

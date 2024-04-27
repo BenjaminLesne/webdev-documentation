@@ -1,0 +1,25 @@
+---
+title: Anything related to Parquet
+---
+
+
+## Visuzalize a file.parquet data
+
+source: [visidata](https://www.visidata.org/)
+
+```bash
+sudo pacman -Syuu visidata python-pandas python-pyarrow 
+```
+
+- Launch the GUI
+
+```bash
+vd -f pandas /path/to/example.parquet
+```
+
+### Shortcuts
+
+- `|` => search string in current column
+- `"` => filter the non matching rows of the previous search
+- `SHIFT + F` => get stats of current column values (ex: % of rows with the FR value)
+

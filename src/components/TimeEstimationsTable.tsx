@@ -32,6 +32,9 @@ const timesRaw = [
     estimation: 4,
     actual: undefined,
     isFirstTime: true,
+    unexpectedHappened: true,
+    comment:
+      "1- Realized half way I did not plan typesafety and a linter backend side. 2- I setup the project before talking to the deployment departement of the client.",
   },
 ];
 
@@ -60,6 +63,8 @@ export const TimeEstimationsTable = () => {
           <TableHead>Actual time (days)</TableHead>
           <TableHead>Time difference (%)</TableHead>
           <TableHead>Is first time</TableHead>
+          <TableHead>Unexpected things happened</TableHead>
+          <TableHead>Comment</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -72,6 +77,10 @@ export const TimeEstimationsTable = () => {
               {ratioToPercentage({ ratio: time.differenceRatio })}
             </TableCell>
             <TableCell>{time.isFirstTime ? "✅" : "❌"}</TableCell>
+            <TableCell>{time.unexpectedHappened ? "✅" : "❌"}</TableCell>
+            <TableCell>
+              <p>{time.comment}</p>
+            </TableCell>
           </TableRow>
         ))}
         <TableRow>

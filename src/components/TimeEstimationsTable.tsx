@@ -30,7 +30,7 @@ const timesRaw = [
   {
     feature: "EUBS setup project (Dockerfile, docker compose, gitlab, etc.)",
     estimation: 4,
-    actual: undefined,
+    actual: 7,
     isFirstTime: true,
     unexpectedHappened: true,
     comment:

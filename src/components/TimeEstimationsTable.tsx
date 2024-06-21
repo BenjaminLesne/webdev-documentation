@@ -26,15 +26,48 @@ function ratioToPercentage({ ratio }: RatioToPercentage) {
   return (ratio * 100).toFixed(2);
 }
 
-const timesRaw = [
+type Difficulty = "easy" |"medium" |"hard"
+type Time = {
+  feature: string;
+  estimation: number;
+  actual: number;
+  isFirstTime: boolean;
+  unexpectedHappened: boolean;
+  comment: string;
+  difficulty: Difficulty;
+
+}
+
+const timesRaw: Array<Time> = [
   {
-    feature: "EUBS setup project (Dockerfile, docker compose, gitlab, etc.)",
+    feature:
+      "Scenario explorer: setup project (Dockerfile, docker compose, gitlab, etc.)",
     estimation: 4,
-    actual: 7,
+    actual: 9,
     isFirstTime: true,
     unexpectedHappened: true,
     comment:
       "1- Realized half way I did not plan typesafety and a linter backend side. 2- I setup the project before talking to the deployment departement of the client.",
+    difficulty: "medium"
+  },
+  {
+    feature: "Scenario explorer: setup frontend",
+    estimation: 1,
+    actual: 1.5,
+    isFirstTime: true,
+    unexpectedHappened: false,
+    comment: "N/A",
+    difficulty: "easy"
+  },
+
+  {
+    feature: "Scenario explorer: dashboard right side section 1/2",
+    estimation: 1.5,
+    actual: null,
+    isFirstTime: false,
+    unexpectedHappened: true,
+    comment: "Eslint vscode extension stopped working, upgrading vscode was required, this triggered a full system upgrade that took hours",
+    difficulty: "medium"
   },
 ];
 

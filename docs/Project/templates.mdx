@@ -1,0 +1,85 @@
+- create new project (with vite for example, react-ts)
+- remove unnecessary files from the boilerplate
+- git
+
+```bash
+git init
+```
+
+- add your package manager to the repo
+
+```bash
+corepack use pnpm@latest
+```
+
+- install the following dev dependencies:
+
+```bash
+pnpm add -D typescript prettier eslint-config-prettier eslint-plugin-playwright eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-tailwindcss @tanstack/eslint-plugin-query @tanstack/router-vite-plugin @typescript-eslint/eslint-plugin @typescript-eslint/parser
+```
+
+```bash
+pnpm create playwright
+```
+
+- now create a .prettierrc with an empty object as content
+- update/replace your .eslintrc with the following:
+
+```js
+module.exports = {
+  root: true,
+  env: { browser: true, es2020: true },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/recommended",
+  ],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "./*.ts"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.eslint.json",
+  },
+  plugins: ["react-refresh", "@typescript-eslint"],
+  rules: {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
+    ],
+  },
+  overrides: [
+    {
+      files: "tests/**",
+      extends: "plugin:playwright/recommended",
+    },
+  ],
+  settings: {
+    react: {
+      version: "detect", // Automatically detect the React version
+    },
+    tailwindcss: {
+      callees: ["classnames", "clsx", "ctl", "cn"],
+    },
+  },
+  
+};
+
+```
+
+
+## Acceptance criteria:
+
+- When saving your file, it should format de code with prettier and auto fix the eslint errors.

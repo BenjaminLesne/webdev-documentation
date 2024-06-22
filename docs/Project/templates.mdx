@@ -12,6 +12,20 @@ git init
 corepack use pnpm@latest
 ```
 
+- add this content in .devcontainer/devcontainer.json
+
+```json
+{
+  "name": "SPA dev container",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/dhoeric/features/hadolint:1": {}
+  },
+  "forwardPorts": [5173, 9323],
+  "postCreateCommand": "pnpm install"
+}
+```
+
 - install the following dev dependencies:
 
 ```bash
@@ -68,18 +82,73 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: "detect", // Automatically detect the React version
+      version: "detect",
     },
     tailwindcss: {
       callees: ["classnames", "clsx", "ctl", "cn"],
     },
   },
-  
 };
-
 ```
 
+Ideally, you check all latest installation documentation of each plugin... 🙂
 
 ## Acceptance criteria:
 
 - When saving your file, it should format de code with prettier and auto fix the eslint errors.
+
+```text
+hadolint
+docker and pnpm
+dev container (too annoying lets do it last)
+✅ VITE
+TRPC
+KNIP
+✅ TS
+Playwrights
+React query (+ devtools)
+Prettier eslint + PLUGINS: prettier + playwright + react + react hooks + react refresh + tailwind SS + node + typescript sort keys
+Docker (docker compose?)
+Drizzle
+(Express? Honor.js? Something else?)
+type-fest
+Shadcn-ui
+Zod
+Tailwind SS
+.gitlab-ci (type check, lint (eslint + Hadolint), tests)
+.workflow GitHub (idem)
+T3 env
+Tanstack router (+ devtools)
+Husky (prevent .only push of tests)
+Gitlab pr template
+GitHub PR template 
+.vscode (settings like use typescript from workspace, eslint idem, extensions: pretty typescript errors, TS error translator, eslint, gitlab workflow, GitHub workflow?, Hadolint, live share, prettify typescripts: better types preview, taimwindcss intellissense, others?)
+Run GitHub workflow locally (see GitHub: nektos/act)
+Idem gitlab?
+Faker.js
+
+Make a cli like T3 stack with my own stuff?
+Which generarse a frontend and backend folder
+Without necessary a common .git?
+
+
+Use git submodules
+APP
+   frontend
+   backend
+   .gitlab-ci ⇒ run tests e2e (gets triggered from front/back pipelines by passing branch name to use, full/feat/123-stuff, if branch starts with full then use branch name front/back otherwise juse use it in repo that triggered tests and develop for the other)
+
+Check out the same branch in the backend submodule if it exists, else fallback to main
+⇒ the issue is that if we make a typo in the branch name backend side, this error won’t be catch and we will use main. The only way to know after that is if the tests fails. We should use a follow this convention: full/feat/123-stuff. If “full” is first string then checkout to the branch back/front, if branch doe snot exists an error will rise
+⇒ does it scale? this full/ tacticts works because we only have front/back repo, what if we have 20 services and some should you the provided branch and others the main.
+⇒ we just go for option 1 (if branch exists use it) and we add a check in MR template to verify the tests branch used are correct?
+
+Yeh but what if you add tests to the main repo. How is the pipepline triggered should know to use the main or wip branch?
+Also, how to prevent the front/back to run twice the same tests on the same branches?
+We only trigger e2e frontend side for example?
+
+Use docker compose for pipeline? and when we deploye to prod we run smoke tests on prod?
+
+careful eslint tailwind plugin does not run on “cn” functon from shadcn, it should be added to callee setting in eslintrc see this
+plugin not useful for ordering tailwind classes since the cn function does it alredy but, give insight on what classes should be used or not example: “this class is deprecated”, or, classes are conflicting Block, flex
+```

@@ -1,0 +1,51 @@
+# Tests end to end
+
+Use [husky](https://typicode.github.io/husky/) and run this bash script to prevent .only and page.pause push:
+
+```bash
+#!/bin/sh
+if grep -R "test.only" ./tests; then
+    echo "🛑🛑🛑🛑 Push aborted: Remove 'test.only' from test files. 🛑🛑🛑🛑"
+    exit 1
+fi
+
+if grep -R "page.pause" ./tests; then
+    echo "🛑🛑🛑🛑 Push aborted: Remove 'page.pause' from test files. 🛑🛑🛑🛑"
+    exit 1
+fi
+```
+
+
+## Playwright
+
+
+```ts title={https://twitter.com/samijaber_/status/1745891213545177273?t=xzzTtKsFqYryH8OeMAJarg}
+import { test as base } from '@playwright/test';
+const test = base.extend<TestOptions> ({
+page: async ({ context, page }, use) => {
+    context.on('weberror', err => {
+    console.error(err.error());
+    throw new Error('Failing test due to error in browser: ' + err.error());
+    });
+    page.on('pageerror', err => {
+        console.error(err);
+        throw new Error('Failing test due to error in browser: ' + err);
+    });
+    
+    context.on('console', msg => {
+    const originalText = msg.text();
+    if (checkIfIsHydrationErrorMessage (originalText)) {
+    throw new Error('Hydration error detected: ' + originalText);
+    }
+    });
+
+    page.on('console', msg => {
+    const originalText = msg.text();
+    if (checkIfIsHydrationError Message (originalText)) {
+    throw new Error('Hydration error detected: ' + originalText);
+    }
+    });
+    await use(page)
+}
+})
+```

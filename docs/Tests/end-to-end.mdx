@@ -49,3 +49,51 @@ page: async ({ context, page }, use) => {
 }
 })
 ```
+
+A classic mistake would be set height as 100dvh and get a massive height for your page on big screen when actually you just want 100dvh for lg screen at best
+
+```ts title={test very big screen}
+  test("snapshot on a very big screen", async ({ page, isMobile }) => {
+    test.skip(isMobile, "Desktop only!");
+
+    await page.setViewportSize({ width: 3840, height: 2160 });
+
+    await waitLoadingEnds({ page });
+
+    await testPageScreenshot({ page });
+  });
+```
+
+
+```ts title={test screenshot}
+type TestScreenshotMatch = {
+  page: Page;
+  target: Locator | Page;
+  options?: PageAssertionsToHaveScreenshotOptions;
+};
+export async function testScreenshot({
+  page,
+  target,
+  options,
+}: TestScreenshotMatch) {
+  await page.bringToFront(); // https://github.com/microsoft/playwright/issues/20434#issuecomment-1477560521
+  await page.evaluate(() => document.fonts.ready);
+
+  await expect(target).toHaveScreenshot(options);
+}
+```
+
+```ts title={wait until loading ends}
+type WaitLoadingEnds = {
+  page: Page;
+};
+export const waitLoadingEnds = async ({ page }: WaitLoadingEnds) => {
+  const loadingIcon = page.getByRole("progressbar");
+
+  await expect(loadingIcon).toHaveCount(0, { timeout: 20_0000 });
+};
+```
+
+
+
+

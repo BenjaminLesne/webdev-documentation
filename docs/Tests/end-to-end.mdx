@@ -15,13 +15,103 @@ if grep -R "page.pause" ./tests; then
 fi
 ```
 
+don't forget that use these in the package.json scripts where .husky is ([source](https://typicode.github.io/husky/how-to.html#project-not-in-git-root-directory)):
+
+```json
+{
+    "prepare": "cd .. && husky path/to/.husky",
+    "pre-push": "sh ./scripts/prevent-.only-page.pause-push.sh"
+}
+```
+
+run the prepare command:
+
+```bash
+pnpm run prepare
+```
+
+rename the pre-commit file to pre-push in .husky and replace the content with:
+
+```bash
+cd path/to/.husky/from/.git
+pnpm run pre-push
+```
+
 
 ## Playwright
 
+don't forget to [setup eslint for playwright](https://playwright.dev/docs/best-practices#lint-your-tests) and [install the plugin](https://www.npmjs.com/package/eslint-plugin-playwright)!
 
-```ts title={https://twitter.com/samijaber_/status/1745891213545177273?t=xzzTtKsFqYryH8OeMAJarg}
-import { test as base } from '@playwright/test';
-const test = base.extend<TestOptions> ({
+Here is an [example repo](https://github.com/alan2207/bulletproof-react/tree/master/apps/nextjs-app) if needed
+
+use the following ts config in the e2e folder ([source](https://playwright.dev/docs/test-typescript#tsconfigjson)):
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "paths": {
+      "@tests/*": [
+        "./e2e/*"
+      ],
+      "@/*": [
+        "../src/*"
+      ],
+    },
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["./", "../src"],
+}
+
+```
+
+add the following to the .eslintrc of your frontend root folder ([source](https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file#with-playwright-test-runner)):
+
+```json
+  "overrides": [
+    {
+      "files": "tests/**",
+      "extends": "plugin:playwright/recommended"
+    }
+  ]
+```
+
+
+Upgrade the test variable like this ([source](https://twitter.com/samijaber_/status/1745891213545177273?t=xzzTtKsFqYryH8OeMAJarg)):
+```ts
+import { test as base, type PlaywrightTestOptions } from '@playwright/test';
+
+function checkIfIsHydrationErrorMessage(message: string): boolean {
+    const hydrationErrorPatterns = [
+      'Hydration failed because',         
+      'Warning: Text content did not match', 
+      'Expected server HTML to contain',  
+      'Hydration warning',                
+      'There was an error while hydrating'
+    ];
+  
+    return hydrationErrorPatterns.some(pattern => message.includes(pattern));
+  }
+  
+
+
+export const test = base.extend<PlaywrightTestOptions> ({
 page: async ({ context, page }, use) => {
     context.on('weberror', err => {
     console.error(err.error());
@@ -34,14 +124,14 @@ page: async ({ context, page }, use) => {
     
     context.on('console', msg => {
     const originalText = msg.text();
-    if (checkIfIsHydrationErrorMessage (originalText)) {
+    if (checkIfIsHydrationErrorMessage(originalText)) {
     throw new Error('Hydration error detected: ' + originalText);
     }
     });
 
     page.on('console', msg => {
     const originalText = msg.text();
-    if (checkIfIsHydrationError Message (originalText)) {
+    if (checkIfIsHydrationErrorMessage(originalText)) {
     throw new Error('Hydration error detected: ' + originalText);
     }
     });
@@ -60,9 +150,11 @@ A classic mistake would be set height as 100dvh and get a massive height for you
 
     await waitLoadingEnds({ page });
 
-    await testPageScreenshot({ page });
+    await testScreenshot({ page });
   });
 ```
+
+
 
 
 ```ts title={test screenshot}
@@ -93,6 +185,12 @@ export const waitLoadingEnds = async ({ page }: WaitLoadingEnds) => {
   await expect(loadingIcon).toHaveCount(0, { timeout: 20_0000 });
 };
 ```
+
+## Errors:
+
+eslint: expect-expect [source](https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/expect-expect.md#options)
+
+
 
 
 

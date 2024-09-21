@@ -135,9 +135,9 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
     prism: {
-      additionalLanguages: ["Bash", "JSON"],
-      theme: prismThemes.github,
-      darkTheme: prismThemes.palenight,
+      additionalLanguages: ["Bash", "JSON", "TypeScript"],
+      theme: prismThemes.vsLight,
+      darkTheme: prismThemes.vsDark,
     },
   } satisfies Preset.ThemeConfig,
 };

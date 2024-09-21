@@ -92,9 +92,12 @@ add the following to the .eslintrc of your frontend root folder ([source](https:
   ]
 ```
 
+Setuo Docker for snapshots (don't forget [Hadolint](https://github.com/hadolint/hadolint)!):
+
 
 Upgrade the test variable like this ([source](https://twitter.com/samijaber_/status/1745891213545177273?t=xzzTtKsFqYryH8OeMAJarg)):
-```ts
+
+```tsx
 import { test as base, type PlaywrightTestOptions } from '@playwright/test';
 
 function checkIfIsHydrationErrorMessage(message: string): boolean {

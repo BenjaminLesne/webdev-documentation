@@ -1,0 +1,172 @@
+# Configuration
+
+## Flat
+
+```js
+// @ts-check
+import eslintJs from "@eslint/js";
+import eslintReact from "@eslint-react/eslint-plugin";
+import tseslint from "typescript-eslint";
+import tailwind from "eslint-plugin-tailwindcss";
+import pluginQuery from "@tanstack/eslint-plugin-query";
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
+// verify imports below in their respective docs
+import eslint-recommended from "eslint:recommended"
+import tseslint-strict-type-checked from "@typescript-eslint/strict-type-checked"
+import react-hooks from "react-hooks/recommended"
+import react-recommended from "react/recommended"
+import prettier-recommended from "prettier/recommended"
+import react-refresh from "react-refresh"
+import no-only-tests from "eslint-plugin-no-only-tests"
+
+export default tseslint.config([{
+  files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  extends: [
+    eslintJs.configs.all,
+    eslintReact.configs.all,
+    tseslint.configs.strictTypeChecked,
+    tseslint.configs.stylisticTypeChecked
+    pluginQuery.configs["flat/recommended"],
+    tailwind.configs["flat/recommended"],
+    // verify below is working
+    eslint-recommended,
+    tseslint-strict-type-checked,
+    react-hooks,
+    react-recommended,
+    react-refresh
+    prettier-recommended,
+    // verify end
+  ],
+  languageOptions: {
+    parser: tseslint.parser,
+    parserOptions: {
+      projectService: true,
+    },
+  },
+  rules: {
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+      },
+    ],
+  },
+  // verify settings key works in flat config
+  settings: {
+    react: {
+      version: "detect",
+    },
+    tailwindcss: {
+      callees: ["classnames", "clsx", "ctl", "cn"],
+    },
+  },
+},
+{
+		languageOptions: {
+			globals: globals.builtin,
+		},
+		plugins: {
+			unicorn: eslintPluginUnicorn,
+		},
+		rules: {
+			'unicorn/better-regex': 'error',
+			'unicorn/…': 'error',
+		},
+	},
+{
+  files: ['tests/**'],
+  ...playwright.configs['flat/recommended'],
+  // verify below works
+  ....no-only-tests,
+  // verify end
+  "rules": {
+  "no-only-tests/no-only-tests": [
+    "error", {
+      "block": ["test", "it", "assert", "page"],
+      "focus": ["only", "focus", "pause"]
+    }
+  ]
+}
+}]
+);
+```
+
+## Deprecated
+
+```js
+module.exports = {
+  root: true,
+  env: { browser: true, es2020: true },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/recommended",
+  ],
+  overrides: [
+    {
+      files: ["**/*.{ts,tsx}"],
+      extends: ["plugin:@eslint-react/recommended-legacy"],
+    },
+  ],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "./*.ts"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.eslint.json",
+  },
+  plugins: [
+    "react-refresh",
+    "@typescript-eslint",
+    "@eslint-react/eslint-plugin",
+  ],
+  rules: {
+    "@typescript-eslint/restrict-template-expressions": [
+      "error",
+      { allowNumber: true },
+    ],
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+    tailwindcss: {
+      callees: ["classnames", "clsx", "ctl", "cn"],
+    },
+  },
+};
+```

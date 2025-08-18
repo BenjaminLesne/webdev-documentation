@@ -1,0 +1,24 @@
+```ts
+type TestScreenshotMatch = {
+  page: Page;
+  target: Locator | Page;
+  options?: PageAssertionsToHaveScreenshotOptions;
+};
+export async function testScreenshot({
+  page,
+  target,
+  options,
+}: TestScreenshotMatch) {
+  await page.bringToFront(); // https://github.com/microsoft/playwright/issues/20434#issuecomment-1477560521
+  await page.evaluate(() => document.fonts.ready);
+  await waitLoadingEnds({ page });
+
+  for (const img of await page.locator("img").all()) {
+    // https://github.com/microsoft/playwright/issues/6046#issuecomment-1803609118
+    await expect(img).toHaveJSProperty("complete", true);
+    await expect(img).not.toHaveJSProperty("naturalWidth", 0);
+  }
+
+  await expect(target).toHaveScreenshot(options);
+}
+```

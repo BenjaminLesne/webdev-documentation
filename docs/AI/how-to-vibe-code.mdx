@@ -1,0 +1,48 @@
+# How to vibe code
+
+## How to prompt
+
+1. Pick a task that is neither too big or too small
+
+Too small, and you're not moving fast enough
+Too big, and you'll blow your context window, even on 3.7 Max.
+
+2. Get your agent to give you 2 implementation plans
+
+Agents will greedily sample the first plan they think of. Get them to give you two different ones.
+
+3. Choose an implementation plan, tell the agent to turn it into a multi-step plan .md file with checkboxes
+
+We'll be using a new chat per stage, so figuring out how much to do in each stage is an art.
+
+4. Pass the whole plan into context, and tell the agent "implement stage 1".
+
+The whole plan gives the agent context about what it's supposed to be doing.
+
+During this bit, check the rest of the implementation plan yourself.
+
+5. Let your feedback loops do the work
+
+Any VSCode 'problem' (i.e. reported as a squiggly line) will get sent to your agent automatically.
+
+Tell your agent RUN THE TESTS BEFORE SHOWING ME THE CODE OR YOU WILL BE FIRED.
+
+6. Iterate on your rules
+
+Rules can help every part of this process - from picking the right amount of work to do per step to telling the agent about interesting scripts in the repo.
+
+7. Pay attention to the code
+
+This is especially true early in a project, where you're establishing the abstractions. Once the agent has some examples to follow, its work gets a lot smarter.
+
+8. Make code easier to delete
+
+The economics of refactoring have changed. It's now cheaper to delete code and re-do it than to refactor it.
+
+This means that highly decoupled systems, where modules are easy to delete, will benefit most from AI.
+
+9. Use Gemini As A Quality Check
+
+Hooking up Gemini, with its massive context window, to check the entire codebase (via a MCP server) can be a good feedback loop.
+
+Can help to spot duplicated code, enforce good usage patterns, etc.

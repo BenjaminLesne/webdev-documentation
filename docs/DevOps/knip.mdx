@@ -1,0 +1,22 @@
+# Introduce Knip to a codebase
+
+## Your first clean up
+
+To avoid gigantic merge requests, start small. You can use each of the following flags at a time which will only remove a certain type of unused code:
+
+- --production
+- --export
+- --files
+- --dependencies
+
+I would start with:
+
+```bash
+knip --production --export
+```
+
+This will only remove unused exports from your production code. Hopefully this will cut down the amount of unused code and simplified the merge request comprehension from your teammates.
+
+## Sources:
+
+- [One Knip at a Time](https://youtu.be/IGseyTezH3E?si=-lE0BNPvXJ0W4UGj) | Dominik Dorfmeister

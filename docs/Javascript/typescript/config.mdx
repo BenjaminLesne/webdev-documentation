@@ -1,14 +1,34 @@
 # Configuration
 
-Want feedback on your tsconfig.json?
+If some tsconfig.json options are set to true, others are automatically set to true as well. This means that the user doesn't need to set them.
 
-npx ai-hero-cli@latest hows-my-tsconfig
+verbatimModuleSyntax: true -> isolatedModules: true
 
-> Add an API key (use Anthropic, it's best)
-> Get feedback on what options are needed
-> Ask followups
+strict: true -> noImplicitAny: true, noImplicitThis: true, strictNullChecks: true, strictFunctionTypes: true, strictBindCallApply: true, strictPropertyInitialization: true, noImplicitReturns: true, useUnknownInCatchVariables: true, strictBuiltinIteratorReturn: true
 
-[source](https://x.com/mattpocockuk/status/1935688013159211084)
+esModuleInterop: true -> allowSyntheticDefaultImports: true
+
+module: "node16" -> moduleResolution: "node16"
+
+module: "node18" -> moduleResolution: "node18"
+
+module: "nodenext" -> moduleResolution: "nodenext"
+
+target: "ES2022" -> lib: ["ES2022", "DOM", "DOM.Iterable"] (if lib is not explicitly set)
+
+[source](https://github.com/mattpocock/ai-hero-cli-archived/blob/main/prompts/hows-my-tsconfig.md)
+
+Use the archived [AI hero repo](https://github.com/mattpocock/ai-hero-cli-archived/blob/main/prompts/hows-my-tsconfig.md) to ask AI about the tsconfig.json file
+
+### Required
+
+- [ts-reset](https://github.com/mattpocock/ts-reset)
+
+### Optional
+
+- [string-ts](https://github.com/gustavoguichard/string-ts)
+
+### Example
 
 ```json
 {
@@ -46,3 +66,9 @@ npx ai-hero-cli@latest hows-my-tsconfig
   "references": [{ "path": "./tsconfig.node.json" }]
 }
 ```
+
+## Sources
+
+- [The TSConfig Cheat Sheet](https://www.totaltypescript.com/tsconfig-cheat-sheet)
+- [AI hero cli tweet](https://x.com/mattpocockuk/status/1935688013159211084)
+- [AI hero hows-my-tsconfig](https://github.com/mattpocock/ai-hero-cli-archived/blob/main/prompts/hows-my-tsconfig.md)

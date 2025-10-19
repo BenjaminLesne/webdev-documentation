@@ -6,5 +6,4 @@ I'm an experienced Frontend Developer with junior level backend knowledge. Some 
 - Prisma
 - Tailwind
 - React
-
-I use Arch linux.
+- arch linux
